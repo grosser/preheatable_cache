@@ -2,6 +2,7 @@ require 'rubygems'
 
 $LOAD_PATH << 'lib'
 require 'active_support/all' # very messy to get working with 2.3 otherwise
+require 'action_controller'
 require 'preheatable_cache'
 
 describe PreheatableCache do

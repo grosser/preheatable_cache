@@ -47,7 +47,7 @@ module PreheatableCache
 
   def initialize(*args)
     super(*args)
-    ActionController::Dispatcher.before_dispatch proc{ clear_preheatable_cache }
+    ActionDispatch::Callbacks.before proc{ clear_preheatable_cache }
   end
 
   def clear_preheatable_cache
