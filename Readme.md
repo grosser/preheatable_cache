@@ -1,7 +1,10 @@
 Reduce cache requests by preheating.
 
-Makes Rails MemCacheStore preheatable via read_multi, for keys that will later be used.
-Clear the preheated cache after each request.
+Makes Rails MemCacheStore preheatable via read_multi, for keys that will later be used.  
+Clears the preheated cache after each request.
+
+ - not threadsave
+ - not altered when writing/incrementing/... underlying cache store
 
 # Install
     script/plugin install http://github.com/grosser/preheatable_cache
