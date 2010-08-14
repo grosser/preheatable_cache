@@ -9,14 +9,13 @@ module PreheatableCache
         end
 
         locally_cached = @preheatable_cache[key]
-        puts locally_cached.inspect
         if locally_cached == NULL
           nil
         elsif locally_cached.nil?
           read_without_preheatable_cache(key, options)
         else
-          # make preheatable cached immutable
-          locally_cached.dup
+          # keep preheatable cached immutable
+          locally_cached.duplicable? ? locally_cached.dup : locally_cached
         end
       end
 
@@ -52,10 +51,9 @@ module PreheatableCache
   end
 
   def clear_preheatable_cache
-    @preheatable_cache.clear if @preheatable_cache
+    @preheatable_cache = nil
   end
 end
 
 # must be included in lowest classes, to overwrite reads
 ActiveSupport::Cache::MemCacheStore.send(:include, PreheatableCache)
-ActiveSupport::Cache::MemoryStore.send(:include, PreheatableCache)
