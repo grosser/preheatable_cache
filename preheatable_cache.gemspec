@@ -16,8 +16,10 @@ Gem::Specification.new do |s|
      "Gemfile.lock",
      "Rakefile",
      "Readme.md",
+     "VERSION",
      "init.rb",
      "lib/preheatable_cache.rb",
+     "preheatable_cache.gemspec",
      "spec/preheatable_cache_spec.rb"
   ]
   s.homepage = %q{http://github.com/grosser/preheatable_cache}
