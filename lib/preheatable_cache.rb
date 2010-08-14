@@ -1,4 +1,6 @@
 module PreheatableCache
+  VERSION = File.read( File.join(File.dirname(__FILE__),'..','VERSION') ).strip
+  
   NULL = 'preheatable_cache:null'
 
   def self.included(base)

@@ -50,4 +50,8 @@ describe PreheatableCache do
       cache.read('xxx').should == 2
     end
   end
+
+  it "has a VERSION" do
+    PreheatableCache::VERSION.should =~ /^\d+\.\d+\.\d+$/
+  end
 end

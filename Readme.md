@@ -1,4 +1,4 @@
-Reduce cache requests by preheating.
+Reduce cache requests by preheating via multi_get.
 
 Makes Rails MemCacheStore preheatable via read_multi, for keys that will later be used.  
 Clears the preheated cache after each request.
