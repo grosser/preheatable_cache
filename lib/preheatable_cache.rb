@@ -26,7 +26,27 @@ module PreheatableCache
   def preheat(keys)
     @preheatable_cache ||= {}
 
-    data = if respond_to?(:read_multi)
+    data = fetch_via_read_multi(keys)
+    store_into_preheatable_cache data
+    add_cache_clearing_callback
+
+    data
+  end
+
+  def clear_preheatable_cache
+    @preheatable_cache = nil
+  end
+
+  private
+
+  def add_cache_clearing_callback
+    return if @clear_callback_added
+    @clear_callback_added = true
+    ActionDispatch::Callbacks.before proc{ clear_preheatable_cache }
+  end
+
+  def fetch_via_read_multi(keys)
+    if respond_to?(:read_multi)
       hash = read_multi(keys)
       # add keys for unfound values
       keys.each{|k| hash[k] = nil if hash[k].nil? }
@@ -34,24 +54,16 @@ module PreheatableCache
     else
       keys.map{|key| read_without_preheatable_cache(key) }
     end
+  end
 
-    keys.each do |key|
-      value = data[key]
+  def store_into_preheatable_cache(data)
+    data.each do |key, value|
       @preheatable_cache[key] = if value.nil?
         NULL
       else
         value
       end
     end
-  end
-
-  def initialize(*args)
-    super(*args)
-    ActionDispatch::Callbacks.before proc{ clear_preheatable_cache }
-  end
-
-  def clear_preheatable_cache
-    @preheatable_cache = nil
   end
 end
 
