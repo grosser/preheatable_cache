@@ -7,6 +7,8 @@ Clears the preheated cache after each request.
  - not altered when writing/incrementing/... underlying cache store
 
 # Install
+    gem install preheatable_cache
+OR
     script/plugin install http://github.com/grosser/preheatable_cache
 
 # Usage
