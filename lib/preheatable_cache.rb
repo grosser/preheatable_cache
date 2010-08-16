@@ -44,7 +44,11 @@ module PreheatableCache
   def add_cache_clearing_callback
     return if @clear_callback_added
     @clear_callback_added = true
-    ActionDispatch::Callbacks.before proc{ clear_preheatable_cache }
+    if Rails.version < '2.3.8'
+      ActionController::Dispatcher.before_dispatch proc{ clear_preheatable_cache }
+    else
+      ActionDispatch::Callbacks.before proc{ clear_preheatable_cache }
+    end
   end
 
   def fetch_via_read_multi(keys)
