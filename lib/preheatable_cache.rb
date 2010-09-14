@@ -44,7 +44,7 @@ module PreheatableCache
   def add_cache_clearing_callback
     return if @clear_callback_added
     @clear_callback_added = true
-    if Rails.version < '2.3.8'
+    if Rails::VERSION::MAJOR == 2
       ActionController::Dispatcher.before_dispatch proc{ clear_preheatable_cache }
     else
       ActionDispatch::Callbacks.before proc{ clear_preheatable_cache }
