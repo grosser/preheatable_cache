@@ -5,6 +5,11 @@ require 'active_support/all' # very messy to get working with 2.3 otherwise
 require 'action_controller'
 require 'preheatable_cache'
 
+module Rails
+  require 'action_pack'
+  VERSION = ActionPack::VERSION
+end
+
 describe PreheatableCache do
   let(:cache){ ActiveSupport::Cache::MemCacheStore.new }
   let(:store){ cache.instance_variable_get '@data' }
